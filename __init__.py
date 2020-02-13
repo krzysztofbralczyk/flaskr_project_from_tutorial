@@ -32,4 +32,21 @@ def create_app(test_config=None): #funkcja zwnana fabryką aplikacji, tworzy i
         #wgraj z folderu instance/ modul config.py
     else:
         app.config.from_mapping(test_config)
-        #jesli test_config zostął podany, wgraje z niego ustawienia
+        #jesli test_config zostął podany, wgraj z niego ustawienia
+
+    try:
+        os.makedirs(app.instance_path)
+        #instance folder nie jest tworzony domyślnie, więc trzeba go utworzyć
+        #jeśli nie istnieje, zwłaszcza że będzie się w nim znajdować
+        #baza danych sqlite
+        #os.makedirs tworzy wszystkie wymagany foldery według podanej ścieżki
+    except OSError:
+        #jeśli folder już instnieje to OSError will be raised, co możemy
+        #przechwycić i pominąć
+        pass
+
+    @app.route('/hello')
+    def hello():
+        return "Hello from Poland!"
+
+    return app

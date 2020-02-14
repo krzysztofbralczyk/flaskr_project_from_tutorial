@@ -9,6 +9,7 @@ def create_app(test_config=None): #funkcja zwnana fabryką aplikacji, tworzy i
 #zwraca instancje aplikacji, dodatkowo przyjmuje test_config, który domyślnie
 #ma wartość None, a w przypadku podania ścieżki pliku, będzie tworzył aplikacje
 #na bazie zawartości pliku
+
     app = Flask(__name__, instance_relative_config=True) # __name__ to nazwa
     #obecnego modułu czyli __init__.py, przekazujemy ten parametr zawsze do
     #aplikacji Flaskowej, instance_relative_config ustawia tzw. instance folder
@@ -19,6 +20,13 @@ def create_app(test_config=None): #funkcja zwnana fabryką aplikacji, tworzy i
     #temu ustawianiu pozniej mozemy uzyc
     #app.config.from_pyfile('config.py') i flask automatycznie bedzie szukal
     #config.py w folderze instance\
+
+    from . import db #import from folder containing this module, a module
+    #written by me containing functions to be usedwith database like initializing,
+    #creating connection and closing connection and init-db command line command
+
+    db.init_app(app) #add function in db module to app instance
+
     app.config.from_mapping( #ustawia domyśle ustawienia
         SECRET_KEY='tobechanged',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),

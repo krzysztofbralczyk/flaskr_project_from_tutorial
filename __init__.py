@@ -27,6 +27,9 @@ def create_app(test_config=None): #funkcja zwnana fabryką aplikacji, tworzy i
 
     db.init_app(app) #add function in db module to app instance
 
+    from . import auth
+    app.register_blueprint(auth.bp)
+
     app.config.from_mapping( #ustawia domyśle ustawienia
         SECRET_KEY='tobechanged',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),

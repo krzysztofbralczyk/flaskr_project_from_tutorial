@@ -30,7 +30,7 @@ def get_db(): #function creating db connection
         g.db.row_factory = sqlite3.Row # not sure, sqlite3.Row is a Class which
         #instances are objects representing single row in a table. They are
         #usefull because with them we can for example access columns by names,
-        #not by indices. row_factory will be db atribute that will be used to
+        #not by indices. row_factory will be db method that will be used to
         #create such objects(rows)
 
     return g.db #function returns database connection which is passed around

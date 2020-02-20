@@ -106,7 +106,7 @@ def login():
 
         flash(error)  # if error happened, it will be flashed. interesting fact:
         # flash object is saved in session so if you clear session before flashing
-        # message, it will be goneeee
+        # message, it will be gone
 
     return render_template('auth/login.html')  # if error happened, we will get
     # this html returned. folder auth will be a folder in templates
@@ -139,15 +139,16 @@ def logout():
 import functools  # library for higher order functions, in this case, for decorator
 
 
-def login_required(view):
-    @functools.wraps(view)  # maked decorated function have the same name
+def login_required(view):  # create a decorator that takes view function and redirects to login page if user is not
+    # logged in
+    @functools.wraps(view)  # makes decorated function have the same name
     # as original one. Without it, decorator would change it's name to name
     # of a wrapper
     def wrapped_view(**kwargs):  # take any number of keyword arguments and store
         # in dictionary
         if g.user is None:  # if load_logged_in_user executed before every
             # request wasn't able to find 'user_id' in session
-            return redirect(url_for(auth.login))  # redirect to url for view
+            return redirect(url_for('auth.login'))  # redirect to url for view
             # function in auth blueprint called login (auth.login)
         return view(**kwargs)
 

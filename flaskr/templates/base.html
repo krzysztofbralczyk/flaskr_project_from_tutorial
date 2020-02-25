@@ -1,0 +1,43 @@
+<!-- it's a base html file, one that will have common parts between all other html's and placeholders for things
+what will be different -->
+
+
+<!doctype html>
+
+<title>{% block title %}{% endblock %} - Flaskr</title>    <!-- block title is a placeholder. Later I will extend this
+base file into few different files, and all those files will have their own title block which will differ-->
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!--Jinja2 has build-in url_for command
+that is used to search for certain files in certain folders. This way we don't need to hardcode path, which may change-->
+
+<nav>
+    <h1>Flaskr</h1>
+    <ul>
+        {% if g.user %} <!--flow control block of jinja. g object is always available in jinja templates-->
+
+            <!-- g object is a way to not only pass values between functions in the same http request, but also to pass
+            value to template engine-->
+
+
+            <!-- if user is logged in, show username and logout link-->
+            <li><span>{{ g.user['username'] }}</span></li>
+            <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+        {% else %}
+            <!-- if user ISN'T logged in, show login link and registration link-->
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<section class = "content">
+    <header>{% block header %}{% endblock %}</header>         <!-- Second block that will be changing between html files - header -->
+    {% for message in get_flashed_messages() %}     <!-- get_flashed_messages() return a list of flashed messages-->
+        <!-- we will be showing every error message that got flashed-->
+        <div class = "flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}    <!-- third block that will be changed between html files, the main content-->
+</section>
+
+
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}      <!-- this html.file uses base.html and only changes parts that were meant to be changed-->
+
+{% block header %}
+    <h1>{% block title %}Register{% endblock %}</h1>         <!-- Word register is used to fill two blocks at once,
+    but header block has additional h1 applied-->
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="username">Username:</label>             <!--Standard form. It's important to fully validate
+        data (check if correct) on server side, even if some validation is done on the side of client-->
+        <input name = "username" id = "username" required>
+        <label for = "password">Password:</label>
+        <input name = "password" id = "password" type = "password" required>
+        <input type="submit" value="Register">    <!-- Value showing on button !!!! xD-->
+    </form>
+{% endblock %}
+
